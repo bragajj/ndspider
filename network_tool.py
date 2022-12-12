@@ -32,7 +32,8 @@ class Network():
     def plot_network(self) -> None:
         pos = nx.fruchterman_reingold_layout(self.graph, seed=100)
         # Color each individually connected subplot
-        C = (self.graph.subgraph(c) for c in nx.connected_components(self.graph))
+        C = (self.graph.subgraph(c)
+             for c in nx.connected_components(self.graph))
         for g in C:
             c = [random.random()] * nx.number_of_nodes(g)
             nx.draw(g, pos, node_size=8, node_color=c,
