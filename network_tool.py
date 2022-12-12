@@ -8,14 +8,14 @@ import random
 
 class Network():
     def __init__(self) -> None:
-        self.g = nx.Graph()
+        self.graph = nx.Graph()
         self.RELATIONS = ['Commercial Registered Agent',
                           'Owner Name', 'Registered Agent', 'Owners']
         self.input_file = "data/nd_data.json"
 
     def create_network(self) -> None:
         edge_list = self.build_edges()
-        self.g.add_edges_from(edge_list)
+        self.graph.add_edges_from(edge_list)
 
     def build_edges(self) -> list:
         with open(self.input_file, "r") as input_json:
@@ -30,9 +30,9 @@ class Network():
                 return (input_data['TITLE'][0], name, {"relation": relation})
 
     def plot_network(self) -> None:
-        pos = nx.fruchterman_reingold_layout(self.g, seed=100)
+        pos = nx.fruchterman_reingold_layout(self.graph, seed=100)
         # Color each individually connected subplot
-        C = (self.g.subgraph(c) for c in nx.connected_components(self.g))
+        C = (self.graph.subgraph(c) for c in nx.connected_components(self.graph))
         for g in C:
             c = [random.random()] * nx.number_of_nodes(g)
             nx.draw(g, pos, node_size=8, node_color=c,
